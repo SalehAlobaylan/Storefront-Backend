@@ -31,11 +31,12 @@ Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar,
 
 Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+<!-- You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass. -->
 
 ### 3. Models
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`.
+ <!-- Remember that these models should all have test suites and mocks. -->
 
 ### 4. Express Handlers
 

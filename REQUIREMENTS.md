@@ -8,14 +8,14 @@ These are the notes from a meeting with the frontend developer that describe wha
 **Example**: A SHOW route: 'blogs/:id' [GET] 
 - Index : 'products/' [GET]
 - Show : 'product/:id' [GET]
-- Create [token required]: 'products/authenticateToken' [POST]
+- Create [token required]: 'products/' [POST]
 <!-- - [OPTIONAL] Top 5 most popular products  -->
 <!-- - [OPTIONAL] Products by category (args: product category) -->
 
 #### Users
-<!-- - Index [token required]: 'Users/' -->
-<!-- - Show [token required]  /users/id -->
-<!-- - Create N[token required] -->
+- Index [token required]: '/Users' [GET]
+- Show [token required]  '/Users/:id' [GET]
+- Create N[token required]: 'Users/authenticateToken' [POST]
 
 #### Orders
 <!-- - Current Order by user (args: user id)[token required] -->
@@ -26,18 +26,28 @@ These are the notes from a meeting with the frontend developer that describe wha
 -  id: VARCHAR
 - name: VARCHAR 
 - price: INTEGER
-<!-- - [OPTIONAL] category -->
+- [OPTIONAL] category: VARCHAR
 
 #### User
 - id: VARCHAR
 - firstName: VARCHAR
 - lastName: VARCHAR
-- password: VARCHAR
+- password: string
 
 #### Orders
 - id: VARCHAR
-<!-- - id of each product in the order: ???????? -->
+- id of each product in the order: VARCHAR (Forgien key)
 - quantity of each product in the order: INTEGER
 - user_id: VARCHAR (Forgien key)
-<!-- - status of order (active or complete): VARCHAR /CHAR (A/C) -->
+- status of order (active or complete): CHAR (A/C)
 
+
+## Database
+### Products Table:
+- Products (id:varchar, name:varchar, price:INTEGER, category:VARCHAR)
+
+### Users Table:
+- Users (id:varchar, firstName:varchar, lastName:varchar, password:string)
+
+### Orders Table:
+- Orders (id:varchar, product_id:varchar[forgien key to Products table], prod_quantity:integer, user_id:varchar[forgien key to Users table], status_of_order:char)
