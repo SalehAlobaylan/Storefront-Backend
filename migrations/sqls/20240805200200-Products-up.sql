@@ -1,1 +1,2 @@
-CREATE TABLE Products (id VARCHAR(25) PRIMARY KEY, name VARCHAR(25), price INTEGER, category VARCHAR(25));
+CREATE TABLE Products (id VARCHAR(150) PRIMARY KEY, name VARCHAR(150), price INTEGER, category VARCHAR(150));
+INSERT INTO Products(id, name, price, category) VALUES('1111', 'for', 1, 'testing') RETURNING *;
