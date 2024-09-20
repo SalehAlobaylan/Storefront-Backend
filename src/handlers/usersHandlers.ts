@@ -2,25 +2,14 @@ import express, { Request, Response } from "express";
 import { users } from "../models/usersModel";
 import jwt from "jsonwebtoken";
 import { verifyToken } from "./middleware/JWT";
-// import bodyParser from 'body-parser'
 
 const store = new users();
 
-// const app = express();
-// app.use(bodyParser.json())
-
 const index = async (req: Request, res: Response) => {
-  // console.log("Entering index function");
-  // console.log("Authorization Header:", req.headers.authorization);
 
-  // const authHeader = req.headers['authorization'];
-  // const token = authHeader && authHeader.split(' ')[1];
   const token = req.header("Authorization")?.split("Bearer ")[1];
-  // console.log("Extracted token:", token);
 
   if (!token) {
-    console.log("\nAuthorized header: ", token);
-    console.log("No token provided");
     return res.status(401).json({ message: "No token provided" });
   }
 
@@ -56,19 +45,12 @@ const show = async (req: Request, res: Response) => {
 // create endpoint handler
 
 const create = async (req: Request, res: Response) => {
-  // const userCreds = {
-  //     id: req.body.id,
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     password: req.body.password
-  // };
+
 
   try {
-    // const { id, firstName, lastName, password } = req.body;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, firstName, lastName, password } = req.body;
     const newUser = await store.create(req.body);
-    // const token = jwt.sign({ userId: newUser.id }, process.env.TOKEN_SECRET as string);
-
-    // console.log("Token generated:", token);
 
     res.status(200).json({
       data: { newUser },

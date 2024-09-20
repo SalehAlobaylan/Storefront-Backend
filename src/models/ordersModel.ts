@@ -55,15 +55,4 @@ export class orders {
     }
   }
 
-  // async index(): Promise<order[]> {
-  //     try {
-  //         const conn = await client.connect()
-  //     const sql = 'SELECT * FROM orders'
-  //     const result = await conn.query(sql)
-  //     conn.release()
-  //     return result.rows
-  //     } catch (err) {
-  //         throw new Error(`Cannot get The products ${err}`)
-  //     }
-  // }
 }

@@ -1,6 +1,6 @@
 import { Client } from "pg";
 import dotenv from "dotenv";
-
+// this script for creating a databse for testing to make the tests then drop the database through the script in package.json
 dotenv.config();
 
 const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_DB } =

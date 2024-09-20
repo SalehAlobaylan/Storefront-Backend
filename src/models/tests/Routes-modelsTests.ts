@@ -25,7 +25,7 @@ describe("Products Model exist", () => {
 
 
   // const x = Math.floor(Math.random() * 50000 + 1);
-  console.log("the id created is:", productId);
+  // console.log("the id created is:", productId);
   it("create method should add a product", async () => {
     const result = await storeP.create({
       id: `${productId}`,
@@ -43,14 +43,14 @@ describe("Products Model exist", () => {
   });
 
   it("show method should return the correct product", async () => {
-    console.log("Created Product ID:", productId); // Debugging
+    // console.log("Created Product ID:", productId);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const queryResult = await client.query(
       "SELECT * FROM products WHERE id = $1",
       [productId],
     );
-    console.log("Query result:", queryResult.rows); // Debugging
+    console.log("Query result:", queryResult.rows); 
     const result = await storeP.show("1111");
     expect(result).toEqual({
       id: "1111",
@@ -76,10 +76,7 @@ describe("users Model exist", () => {
     expect(storeU.index).toBeDefined();
   });
 
-  // it("index method should return a list of users", async () => {
-  //     const result = await storeU.index();
-  //     expect(result).toEqual([]);
-  // });
+
   const y = Math.floor(Math.random() * 50000 + 1);
   const users = {
     id: String(y),
@@ -99,33 +96,6 @@ describe("users Model exist", () => {
     expect(createUser.lastName).toBe(users.lastName); //  console.log("the Lastname expected is:", createUser.lastName)
   });
 
-  // it('create method should add a user', async () => {
-  //   const result = await storeU.create({
-  //     id: `${x}`,
-  //     firstName: "Ahmed",
-  //     lastName: "Faisal",
-  //     password: String(password)
-  //   });
-  //   const hash = bcrypt.hashSync(password + process.env.pepper, parseInt(process.env.SALT_ROUNDS as string));
-  //   expect(result).toEqual({
-  //     id: `${x}`,
-  //     firstName: 'Ahmed',
-  //     lastName: "Faisal",
-  //     password: String(hash)
-  //   });
-  // });
-
-  // it('show method should return the correct user', async () => {
-
-  //     const result = await storeU.show((`${x}`));
-  //     const hash = bcrypt.hashSync(password + process.env.pepper, parseInt(process.env.SALT_ROUNDS as string));
-  //     expect(result).toEqual({
-  //       id: `${x}`,
-  //       firstName: "Ahmed",
-  //       lastName: "Faisal",
-  //       password: String(hash)
-  //     });
-  //   });
 
   it("show method should return the correct user", async () => {
     const showing = Math.floor(Math.random() * 50000 + 1);

@@ -50,8 +50,7 @@ export class users {
         u.password + process.env.pepper,
         parseInt(process.env.SALT_ROUNDS as string),
       );
-      // const values = [u.id, u.firstName, u.lastName, [u.password, hash]];
-      // const result = await conn.query(sql, values)
+
       const result = await conn.query(sql, [
         u.id,
         u.firstName,
@@ -76,29 +75,22 @@ export class users {
   async Authenticator(id: string, pass: string): Promise<user | null> {
     try {
       const conn = await client.connect();
-      // const sql = 'SELECT password FROM users WHERE id=($1)'
       const sql = `SELECT password FROM users WHERE id=$1`;
 
       const result = await conn.query(sql, [id]);
-      console.log("The id: " + process.env.pepper);
-      console.log("The password: ", pass + process.env.pepper);
-      console.log("before entering result.rows.length");
       conn.release();
       if (result.rows.length) {
-        console.log("entering result.rows.length why");
+        console.log("result.rows.length exist:");
         console.log(result.rows[0]);
 
         const { password: hashedPassword } = result.rows[0];
-        console.log("The hashed password: " + hashedPassword);
 
         const valid = bcrypt.compareSync(
           pass + process.env.pepper,
           hashedPassword,
         );
-        // const valid =bcrypt.compareSync(`${pass}  ${process.env.pepper}`,hashedPassword);
 
         if (valid) {
-          console.log("entering valid means the password is correct");
           const conn = await client.connect();
           const user = await conn.query(
             `SELECT id, firstName, lastName FROM users where id=$1`,
@@ -115,39 +107,5 @@ export class users {
     }
   }
 
-  // async Authenticator(id: string, pass: string): Promise<user | null> {
-  //     try{
-  //         const conn = await client.connect();
-  //         const sql = 'SELECT * FROM users WHERE id=($1)';
-  //         const result = await conn.query(sql,[id]);
 
-  //         if(result.rows.length) {
-  //             const { password: hashPassword } = result.rows[0]
-  //             const isValid = bcrypt.compareSync(`${pass}${process.env.pepper}`,hashPassword)
-  //         }
-
-  //     }catch(err) {
-  //         console.log(err)
-  //     }
-  // }
 }
-
-// async Authenticator(id: string, pass: string): Promise<user | null> {
-//     const conn = await client.connect()
-//     // const sql = 'SELECT password FROM users WHERE id=($1)'
-//     const sql = 'SELECT * FROM users WHERE id=($1)'
-
-//     const result = await conn.query(sql,[id])
-
-//     console.log(pass + process.env.pepper)
-
-//     if(result.rows.length) {
-//         const user = result.rows[0]
-//         console.log(user)
-
-//         if(bcrypt.compareSync(pass + process.env.pepper, user.password)) {
-//             return user
-//         }
-//     }
-// return null
-// }

@@ -19,16 +19,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Now this middleware makes the cors enabled globally on all endpoints
 app.use(bodyParser.json());
-// app.use(express.json());
-
-// app.get('/', function (req: Request, res: Response) {
-//     res.send('Hello World!')
-// })
-
-// app.get('/test-cors', cors(corsOptions),function(req,res,next){
-//     res.json({msg:'This is CORS-enabled with middle ware'})
-// // just testing cors as a middle ware
-// })
 
 products_routes(app);
 users_routes(app);

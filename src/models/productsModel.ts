@@ -47,7 +47,6 @@ export class products {
   }
   // const create
   async create(p: product): Promise<product> {
-    //reqiered token
     try {
       const conn = await client.connect();
       const sql = `INSERT INTO products (id, name, price, category) VALUES($1, $2, $3, $4) RETURNING *`;
