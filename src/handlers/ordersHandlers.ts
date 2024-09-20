@@ -6,10 +6,10 @@ import { verifyToken } from "./middleware/JWT";
 const store = new orders();
 
 const current = async (req: Request, res: Response) => {
-  const { user_id } = req.body;
+  const { id } = req.params;
 
   try {
-    const order = await store.currentOrder(user_id);
+    const order = await store.currentOrder(id);
 
     const token = req.header("Authorization")?.split("Bearer ")[1];
     if (!token) {
@@ -29,7 +29,7 @@ const current = async (req: Request, res: Response) => {
 // }
 
 const orders_routes = (app: express.Application) => {
-  // app.get('/users/:user_id/orders/current', current);
+  // app.get('/users/:id/orders/current', current);
   app.get("/orders/:id",verifyToken, current);
 };
 export default orders_routes;
