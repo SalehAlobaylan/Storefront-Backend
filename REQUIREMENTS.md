@@ -27,6 +27,10 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Current Order by user (args: user id)[token required] : '/orders/:id' [GET]
 <!-- - [OPTIONAL] Completed Orders by user (args: user id)[token required] -->
 
+#### order_products
+
+- getAllorders : '/orders/products/:id' [GET]
+
 ## Data Shapes
 
 #### Product
@@ -51,6 +55,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id: VARCHAR (Forgien key)
 - status of order (active or complete): CHAR (A/C)
 
+#### order_products
+
+- id of each product in the order: VARCHAR (Forgien key)
+- user_id: VARCHAR (Forgien key)
+
 ## Database
 
 ### Products Table:
@@ -64,3 +73,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 ### Orders Table:
 
 - Orders (id:varchar, product_id:varchar[forgien key to Products table], prod_quantity:integer, user_id:varchar[forgien key to Users table], status_of_order:char)
+
+### order_products Table:
+
+- order_products (product_id:varchar[forgien key to Products table], user_id:varchar[forgien key to Users table])
