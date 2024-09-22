@@ -3,7 +3,7 @@ import { order_products } from "../models/order_productsModel";
 
 const store = new order_products();
 
-const getOrders = async (req: Request,res: Response) =>{
+export const getOrders = async (req: Request,res: Response) =>{
     const { user_id } = req.params;
     const prodID = await store.getAllorders(user_id);
     res.json(prodID);

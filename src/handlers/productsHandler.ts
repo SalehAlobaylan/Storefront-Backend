@@ -4,7 +4,7 @@ import { verifyToken } from "./middleware/JWT";
 
 const store = new products();
 
-const index = async (req: Request, res: Response) => {
+export const index = async (req: Request, res: Response) => {
   // _req means that not gonna be read
 
   const token = req.header("Authorization")?.split("Bearer ")[1];
@@ -17,13 +17,13 @@ const index = async (req: Request, res: Response) => {
   res.json(prod);
 };
 
-const show = async (req: Request, res: Response) => {
-  const { user_id } = req.body;
+export const show = async (req: Request, res: Response) => {
+  const { user_id } = req.params;
   const prodID = await store.show(user_id);
   res.json(prodID);
 };
 
-const create = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response) => {
   const prods = {
     id: req.body.id,
     name: req.body.name,

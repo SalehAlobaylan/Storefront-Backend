@@ -5,7 +5,7 @@ import { verifyToken } from "./middleware/JWT";
 
 const store = new orders();
 
-const current = async (req: Request, res: Response) => {
+export const current = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
@@ -23,7 +23,7 @@ const current = async (req: Request, res: Response) => {
   }
 };
 
-// const completed = async (req: Request, res: Response) => {
+// export const completed = async (req: Request, res: Response) => {
 //     const theorder = await store.index();
 //     res.json(theorder);
 // }

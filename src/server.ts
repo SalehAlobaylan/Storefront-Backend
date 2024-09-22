@@ -6,10 +6,10 @@ import cors from "cors";
 import products_routes from "./handlers/productsHandler";
 import users_routes from "./handlers/usersHandlers";
 import orders_routes from "./handlers/ordersHandlers";
-
+import order_products_routes from "./handlers/order_productsHandler";
 dotenv.config();
 
-const app: express.Application = express();
+export const app: express.Application = express();
 const address: string = "0.0.0.0:3000";
 
 const corsOptions = {
@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 products_routes(app);
 users_routes(app);
 orders_routes(app);
+order_products_routes(app);
+
 
 app.listen(3000, function () {
   console.log(`starting app on: ${address}`);

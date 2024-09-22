@@ -5,7 +5,7 @@ import { verifyToken } from "./middleware/JWT";
 
 const store = new users();
 
-const index = async (req: Request, res: Response) => {
+export const index = async (req: Request, res: Response) => {
 
   const token = req.header("Authorization")?.split("Bearer ")[1];
 
@@ -27,7 +27,7 @@ const index = async (req: Request, res: Response) => {
 };
 
 // show endpoint handler
-const show = async (req: Request, res: Response) => {
+export const show = async (req: Request, res: Response) => {
   const { user_id } = req.params;
   const token = req.header("Authorization")?.split("Bearer ")[1];
   if (!token) {
@@ -44,7 +44,7 @@ const show = async (req: Request, res: Response) => {
 
 // create endpoint handler
 
-const create = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response) => {
 
 
   try {
@@ -63,7 +63,7 @@ const create = async (req: Request, res: Response) => {
 };
 
 // authntication endpoint handler
-const auth = async (req: Request, res: Response) => {
+export const auth = async (req: Request, res: Response) => {
   const { id, password } = req.body;
   const authen = await store.Authenticator(id, password);
   if (!authen) {
