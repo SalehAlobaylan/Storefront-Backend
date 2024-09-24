@@ -20,28 +20,31 @@ export const index = async (req: Request, res: Response,next: NextFunction ) => 
 
 // show endpoint handler
 export const show = async (req: Request, res: Response ) => {
-  const { user_id } = req.params;
-
-  const user = await store.show(user_id);
-  res.json({ user });
+  const { id  } = req.params;
+  try{
+    const user = await store.show(id );
+    res.json({ user });
+  }catch (error) {
+    res.status(404).json({ error });
+  }
+  
 };
 
 // create endpoint handler
 
-export const create = async (req: Request, res: Response,next: NextFunction ) => {
+export const create = async (req: Request, res: Response) => {
 
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const userCreds = { id: req.body.id , firstName: req.body.firstName, lastName: req.body.lastName, password: req.body.password } = req.body;
-    const newUser = await store.create(userCreds);
+    const { id, firstName, lastName, password } = req.body;
+    const newUser = await store.create({ id, firstName, lastName, password });
 
     res.status(200).json({
-      data: { newUser },
+      data: { user: newUser },
       message: "A new user has been created successfully",
     });
   } catch (error) {
-    next(error)
+    
     console.log(error)
     res.status(500).json({ error: "Error creating user" });
   }

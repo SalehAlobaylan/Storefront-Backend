@@ -6,20 +6,13 @@ const store = new products();
 
 export const index = async (req: Request, res: Response) => {
   // _req means that not gonna be read
-
-  const token = req.header("Authorization")?.split("Bearer ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "No token provided" });
-  }
-
   const prod = await store.index();
   res.json(prod);
 };
 
 export const show = async (req: Request, res: Response ) => {
-  const { user_id } = req.params;
-  const prodID = await store.show(user_id);
+  const { id } = req.params;
+  const prodID = await store.show(id);
   res.json(prodID);
 };
 
@@ -34,7 +27,10 @@ export const create = async (req: Request, res: Response, next: NextFunction ) =
   try {
     const creating = await store.create(prods);
 
-    res.json({ creating });
+    res.json({ 
+      data: creating,
+      message: 'Created product details: '
+     });
   } catch (error) {
     next(error)
     console.log(error)

@@ -24,7 +24,7 @@ export class products {
   async show(product_id: string): Promise<product> {
     try {
       const conn = await client.connect();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       const sql = "SELECT * FROM products where id = $1";
       const result = await conn.query(sql, [product_id]);
       conn.release();

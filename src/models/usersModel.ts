@@ -29,6 +29,9 @@ export class users {
       const sql = "SELECT * FROM users where id = $1";
       const result = await conn.query(sql, [user_id]);
       conn.release();
+      if (!result.rows.length) {
+        throw new Error(`User with id ${user_id} not found`);
+      }
       const user = result.rows[0];
       return {
         id: user.id,

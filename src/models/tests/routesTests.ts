@@ -16,7 +16,7 @@ const storeO = new orders();
 const storeOP = new order_products();
 
 
-const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE3MjcxMjE5NDl9.OzC6hrSL7NBjIqzYr2SoDpsK0xTGMOUzraMX5dDDfEQ';
+let token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE3MjcxMjE5NDl9.OzC6hrSL7NBjIqzYr2SoDpsK0xTGMOUzraMX5dDDfEQ';
 
   const product = {
     id: `${UUID}`,
@@ -54,7 +54,7 @@ const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQi
       const createOrderProducts = await storeOP.getAllorders(order_product.user_id)
       order_product.user_id = createOrderProducts.user_id ; console.log(order_product.user_id)
     })
-    describe('Lists Products endpoints', () => {
+    describe(' Products endpoints', () => {
       it('should get list of products', async () => {
         const res = await request
           .get('/products/')
@@ -64,10 +64,51 @@ const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQi
         expect(Object.keys(res.body).length).toBeGreaterThan(0);
       })
 
+      it('/ should get spicific product', async () => {
+        const res = await request
+          .get(`/products/${product.id}`)
+          .set('Authorization', `Bearer ${token}`)
+          .set('Content-type', 'application/json')
+        expect(res.status).toBe(200)
+        expect(Object.keys(res.body).length).toBeGreaterThan(0);
+      })
+
+      it(' / Creating a new product', async () => {
+        const randomId = uuidv4();
+        const res = await request
+          .post('/products')
+          .set('Authorization', `Bearer ${token}`)
+          .set('Content-type', 'application/json')
+          .send({
+            id: randomId,
+            name: 'for',
+            price: 1,
+            category: 'testing'
+          })
+  
+        expect(res.status).toBe(200)
+        const { id, name, price, category } = res.body.data
+        expect(id).toBe(randomId)
+        expect(name).toBe('for')
+        expect(price).toBe(1)
+        expect(category).toBe('testing')
+
+      })  
+      
+
   })
 
-  describe('Lists users endpoints', () => {
-    it('should get list of users', async () => {
+  describe(' users endpoints', () => {
+    it(' / should get spicific user', async () => {
+      const res = await request
+        .get(`/users/${user.id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-type', 'application/json')
+      expect(res.status).toBe(200)
+      expect(Object.keys(res.body).length).toBeGreaterThan(0);
+    })
+
+    it(' / should get list user', async () => {
       const res = await request
         .get('/users')
         .set('Authorization', `Bearer ${token}`)
@@ -76,10 +117,54 @@ const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQi
       expect(Object.keys(res.body).length).toBeGreaterThan(0);
     })
 
-})      
+    it(' / Creating a new user', async () => {
+      const randomId = uuidv4();
+      const res = await request
+        .post('/users')
+        .set('Content-type', 'application/json')
+        .send({
+          id: randomId,
+          firstName: 'for',
+          lastName: 'testing',
+          password: 'only'
+        })
+
+      expect(res.status).toBe(200)
+      const { id, firstName, lastName } = res.body.data.user
+      expect(id).toBe(randomId)
+      expect(firstName).toBe('for')
+      expect(lastName).toBe('testing')
+    })  
+    
+
+    it(' / authenticate the user and gets a token ', async () => {  
+      const res = await request
+        .post('/auth')
+        .set('Content-type', 'application/json')
+        .send({ id: user.id, password: 'only' })
+      
+      expect(res.status).toBe(200);
+      
+      const {
+        id,
+        firstname: firstName,
+        lastname: lastName
+      } = res.body.authen;
+    
+      const userToken = res.body.token;
+    
+      expect(id).toBe(user.id);
+      expect(firstName).toBe(user.firstName);
+      expect(lastName).toBe(user.lastName);
+      
+      token = userToken;
+    });
+    
+
+});     
 
 describe('order endpoint', () => {
-  it('should get spicefic order', async () => {
+  it(' / hould get spicefic order', async () => {
     const res = await request
       .get(`/orders/${order.user_id}`)
       .set('Authorization', `Bearer ${token}`)
@@ -90,7 +175,7 @@ describe('order endpoint', () => {
 })
 
 describe('orderProduct endpoint', () => {
-  it('should get all order for a user', async () => {
+  it(' / should get all order for a user', async () => {
     const res = await request
       .get(`/orders/products/${order_product.user_id}`)
       .set('Authorization', `Bearer ${token}`)
