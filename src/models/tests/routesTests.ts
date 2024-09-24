@@ -63,15 +63,7 @@ const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQi
         expect(res.status).toBe(200)
         expect(Object.keys(res.body).length).toBeGreaterThan(0);
       })
-  //   it('should get one of the products', async () => {
-  //     const res = await request
-  //       .get(`/products/${product.id}`)
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .set('Content-type', 'application/json');
-  //     const { name, price } = res.body;
-  //     expect(name).toBe('for');
-  //     expect(price).toBe(1);
-  // });
+
   })
 
   describe('Lists users endpoints', () => {
@@ -83,15 +75,7 @@ const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQi
       expect(res.status).toBe(200)
       expect(Object.keys(res.body).length).toBeGreaterThan(0);
     })
-//   it('should get one of the products', async () => {
-//     const res = await request
-//       .get(`/products/${product.id}`)
-//       .set('Authorization', `Bearer ${token}`)
-//       .set('Content-type', 'application/json');
-//     const { name, price } = res.body;
-//     expect(name).toBe('for');
-//     expect(price).toBe(1);
-// });
+
 })      
 
 describe('order endpoint', () => {
