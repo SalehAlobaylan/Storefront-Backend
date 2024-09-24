@@ -5,11 +5,11 @@ const order_productsModel_1 = require("../models/order_productsModel");
 const store = new order_productsModel_1.order_products();
 const getOrders = async (req, res) => {
     const { user_id } = req.params;
-    const prodID = await store.getAllorders(user_id);
-    res.json(prodID);
+    const Orderlist = await store.getAllorders(user_id);
+    res.json(Orderlist);
 };
 exports.getOrders = getOrders;
 const order_products_routes = (app) => {
-    app.get('/orders/products/:id', exports.getOrders);
+    app.get('/orders/products/:user_id', exports.getOrders);
 };
 exports.default = order_products_routes;

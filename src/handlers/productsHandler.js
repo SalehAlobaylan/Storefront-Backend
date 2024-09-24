@@ -20,7 +20,7 @@ const show = async (req, res) => {
     res.json(prodID);
 };
 exports.show = show;
-const create = async (req, res) => {
+const create = async (req, res, next) => {
     const prods = {
         id: req.body.id,
         name: req.body.name,
@@ -32,6 +32,7 @@ const create = async (req, res) => {
         res.json({ creating });
     }
     catch (error) {
+        next(error);
         console.log(error);
         res.status(500).json({ error: "Error creating user" });
     }

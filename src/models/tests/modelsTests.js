@@ -6,13 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const productsModel_1 = require("../productsModel");
 const usersModel_1 = require("../usersModel");
 const ordersModel_1 = require("../ordersModel");
+const order_productsModel_1 = require("../order_productsModel");
 const database_1 = __importDefault(require("../../database"));
 const uuid_1 = require("uuid");
 const productId = (0, uuid_1.v4)();
 const storeP = new productsModel_1.products();
 const storeU = new usersModel_1.users();
 const storeO = new ordersModel_1.orders();
-//products
+const storeOP = new order_productsModel_1.order_products();
+// products
 describe("Products Model exist", () => {
     it("should have an index method", () => {
         expect(storeP.index).toBeDefined();
@@ -25,6 +27,10 @@ describe("Products Model exist", () => {
     });
     // const x = Math.floor(Math.random() * 50000 + 1);
     // console.log("the id created is:", productId);
+    it("index method should return list of products (more than zero object) ", async () => {
+        const result = await storeP.index();
+        expect(Object.keys(result).length).toBeGreaterThan(0);
+    });
     it("create method should add a product", async () => {
         const result = await storeP.create({
             id: `${productId}`,
@@ -53,7 +59,7 @@ describe("Products Model exist", () => {
         });
     });
 });
-//users
+// users
 describe("users Model exist", () => {
     it("should have an index method", () => {
         expect(storeU.index).toBeDefined();
@@ -71,6 +77,10 @@ describe("users Model exist", () => {
         lastName: "one",
         password: "123",
     };
+    it("index method should return list of users (more than zero object)", async () => {
+        const result = await storeU.index();
+        expect(Object.keys(result).length).toBeGreaterThan(0);
+    });
     it("Create new  user should  return the new user in db ", async () => {
         const createUser = await storeU.create(users);
         users.id = createUser.id;
@@ -98,7 +108,7 @@ describe("users Model exist", () => {
         // console.log("Expected Lastname:", createUser.lastName);
     });
 });
-//orders
+// orders
 describe("orders Model", () => {
     it("should have a current method", () => {
         expect(storeO.currentOrder).toBeDefined();
@@ -119,5 +129,19 @@ describe("orders Model", () => {
             user_id: orders.user_id,
             status_of_order: "A",
         });
+    });
+});
+// order_product
+describe("order_product Model", () => {
+    it("should have a current method", () => {
+        expect(storeOP.getAllorders).toBeDefined();
+    });
+    it("getAllorders method should return if there's products for a user ", async () => {
+        const order_product = {
+            product_id: '1111',
+            user_id: '1111'
+        };
+        const result = await storeOP.getAllorders(order_product.user_id);
+        expect(Object.keys(result).length).toBeGreaterThan(0);
     });
 });

@@ -1,6 +1,8 @@
 import {  products } from "../productsModel";
 import { user, users } from "../usersModel";
 import { order, orders } from "../ordersModel";
+import { order_product, order_products } from '../order_productsModel'
+
 import client from "../../database";
 import { v4 as uuidv4 } from "uuid";
 
@@ -9,8 +11,9 @@ const productId = uuidv4();
 const storeP = new products();
 const storeU = new users();
 const storeO = new orders();
+const storeOP = new order_products();
 
-//products
+// products
 describe("Products Model exist", () => {
   it("should have an index method", () => {
     expect(storeP.index).toBeDefined();
@@ -26,6 +29,12 @@ describe("Products Model exist", () => {
 
   // const x = Math.floor(Math.random() * 50000 + 1);
   // console.log("the id created is:", productId);
+
+  it("index method should return list of products (more than zero object) ", async () => {
+    const result = await storeP.index();
+    expect(Object.keys(result).length).toBeGreaterThan(0);
+  });
+
   it("create method should add a product", async () => {
     const result = await storeP.create({
       id: `${productId}`,
@@ -61,7 +70,7 @@ describe("Products Model exist", () => {
   });
 });
 
-//users
+// users
 
 describe("users Model exist", () => {
   it("should have an index method", () => {
@@ -85,6 +94,10 @@ describe("users Model exist", () => {
     password: "123",
   } as user;
 
+  it("index method should return list of users (more than zero object)", async () => {
+    const result = await storeU.index();
+    expect(Object.keys(result).length).toBeGreaterThan(0);
+  });
 
   it("Create new  user should  return the new user in db ", async () => {
 
@@ -122,7 +135,7 @@ describe("users Model exist", () => {
   });
 });
 
-//orders
+// orders
 describe("orders Model", () => {
   it("should have a current method", () => {
     expect(storeO.currentOrder).toBeDefined();
@@ -145,6 +158,24 @@ describe("orders Model", () => {
       user_id: orders.user_id,
       status_of_order: "A",
     });
+  });
+
+});
+
+// order_product
+describe("order_product Model", () => {
+  it("should have a getAllorders method", () => {
+    expect(storeOP.getAllorders).toBeDefined();
+  });
+
+  it("getAllorders method should return if there's products for a user ", async () => {
+    const order_product = {
+      product_id: '1111',
+      user_id: '1111'
+    } as order_product
+
+    const result = await storeOP.getAllorders(order_product.user_id);
+    expect(Object.keys(result).length).toBeGreaterThan(0);
   });
 
 });

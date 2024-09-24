@@ -5,18 +5,14 @@ const ordersModel_1 = require("../models/ordersModel");
 const JWT_1 = require("./middleware/JWT");
 const store = new ordersModel_1.orders();
 const current = async (req, res) => {
-    const { id } = req.params;
+    const { user_id } = req.params;
     try {
-        const order = await store.currentOrder(id);
-        const token = req.header("Authorization")?.split("Bearer ")[1];
-        if (!token) {
-            return res.status(401).json({ message: "No token provided" });
-        }
-        res.json({ order, token });
+        const order = await store.currentOrder(user_id);
+        res.json({ order });
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Error creating user" });
+        res.status(500).json({ error: "cannot get order info" });
     }
 };
 exports.current = current;
@@ -26,6 +22,6 @@ exports.current = current;
 // }
 const orders_routes = (app) => {
     // app.get('/users/:id/orders/current', current);
-    app.get("/orders/:id", JWT_1.verifyToken, exports.current);
+    app.get("/orders/:user_id", JWT_1.verifyToken, exports.current);
 };
 exports.default = orders_routes;

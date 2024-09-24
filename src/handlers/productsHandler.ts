@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction  } from "express";
 import { products } from "../models/productsModel";
 import { verifyToken } from "./middleware/JWT";
 
@@ -17,13 +17,13 @@ export const index = async (req: Request, res: Response) => {
   res.json(prod);
 };
 
-export const show = async (req: Request, res: Response) => {
+export const show = async (req: Request, res: Response ) => {
   const { user_id } = req.params;
   const prodID = await store.show(user_id);
   res.json(prodID);
 };
 
-export const create = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response, next: NextFunction ) => {
   const prods = {
     id: req.body.id,
     name: req.body.name,
@@ -36,6 +36,7 @@ export const create = async (req: Request, res: Response) => {
 
     res.json({ creating });
   } catch (error) {
+    next(error)
     console.log(error)
     res.status(500).json({ error: "Error creating user" });
   }

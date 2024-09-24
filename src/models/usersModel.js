@@ -66,28 +66,44 @@ class users {
         }
     }
     async Authenticator(id, pass) {
+        let conn;
         try {
-            const conn = await database_1.default.connect();
+            // Connect to DB
+            conn = await database_1.default.connect();
+            // Query for the hashed password
             const sql = `SELECT password FROM users WHERE id=$1`;
             const result = await conn.query(sql, [id]);
-            conn.release();
+            // Check if user exists
             if (result.rows.length) {
-                console.log("result.rows.length exist:");
-                console.log(result.rows[0]);
+                console.log("User found:", result.rows[0]);
                 const { password: hashedPassword } = result.rows[0];
+                console.log("Plain password (before peppering):", pass);
+                console.log("Pepper:", process.env.pepper);
+                // Log to check the peppered password and hashedPassword
+                console.log("Plain password + pepper:", pass + process.env.pepper);
+                console.log("Hashed password from DB:", hashedPassword);
+                // Compare provided password with stored hashed password
                 const valid = bcrypt_1.default.compareSync(pass + process.env.pepper, hashedPassword);
+                console.log("Is password valid:", valid);
+                // If password is valid, return the user details
                 if (valid) {
-                    const conn = await database_1.default.connect();
-                    const user = await conn.query(`SELECT id, firstName, lastName FROM users where id=$1`, [id]);
-                    conn.release();
-                    return user.rows[0]; // ||null
+                    const userQuery = `SELECT id, firstName, lastName FROM users where id=$1`;
+                    const userResult = await conn.query(userQuery, [id]);
+                    console.log("Authenticated user:", userResult.rows[0]);
+                    return userResult.rows[0]; // Return user info
                 }
             }
+            // Return null if authentication fails
             return null;
         }
         catch (err) {
-            console.log(err);
+            console.error("Error during authentication:", err);
             return null;
+        }
+        finally {
+            // Ensure connection is always released
+            if (conn)
+                conn.release();
         }
     }
 }

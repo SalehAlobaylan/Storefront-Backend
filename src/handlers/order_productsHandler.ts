@@ -5,11 +5,11 @@ const store = new order_products();
 
 export const getOrders = async (req: Request,res: Response) =>{
     const { user_id } = req.params;
-    const prodID = await store.getAllorders(user_id);
-    res.json(prodID);
+    const Orderlist = await store.getAllorders(user_id);
+    res.json(Orderlist);
 }
 
 const order_products_routes = (app: express.Application) => {
-    app.get('/orders/products/:id', getOrders);
+    app.get('/orders/products/:user_id', getOrders);
 }
 export default order_products_routes
