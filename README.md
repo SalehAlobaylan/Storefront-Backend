@@ -1,4 +1,5 @@
 # Storefront Backend Project
+<img href="" src="https://github.com/SalehAlobaylan/Diagrams/blob/main/StoreFrontBackend.png" alt="LoanIt" width="800"/>
 ## To access the database in (port 5433) through docker in these steps:
     docker compose up
     psql -h 127.0.0.1 -p 5433 -U postgres
